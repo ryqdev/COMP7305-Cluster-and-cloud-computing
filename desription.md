@@ -20,7 +20,7 @@
 
 3.peer review
 
-
+DDL: 10.24
 
 ## Part II
 
@@ -37,3 +37,9 @@
 2.meeting report: snapshots 
 
 3.peer review
+
+## Timeline
+
+26-Sep Environment
+5-Oct    Optimization
+10-Oct   Project material
