@@ -21,11 +21,9 @@ sudo tar xvf spark-2.4.0-bin-hadoop2.7.tgz
 sudo chown -R hduser:hadoop ./spark-2.4.0-bin-hadoop2.7
 ```
 
-
-
 ## 1.2 Configure Spark
 
-on the` master node`
+on the` master node`, use hduser account
 
 ```shell
 cp /opt/spark-2.4.0-bin-hadoop2.7/conf/spark-env.sh.template /opt/spark-2.4.0-bin-hadoop2.7/conf/spark-env.sh 
@@ -48,13 +46,15 @@ sudo vim /opt/spark-2.4.0-bin-hadoop2.7/conf/spark-defaults.conf
 Add
 
 ```
-spark.master spark://student5-master:7077 
-spark.serializer  
-org.apache.spark.serializer.KryoSerializer
+spark.master	spark://student5-master:7077 
+spark.serializer  org.apache.spark.serializer.KryoSerializer
 spark.executor.instances 11 
 spark.eventLog.enabled true
-spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog spark.history.fs.logDirectory hdfs://studentXX-master:9000/tmp/sparkLog spark.eventLog.logBlockUpdates.enabled=true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog 
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog spark.eventLog.logBlockUpdates.enabled=true
 ```
+
+
 
 ```shell
 hdfs dfs -mkdir /tmp/sparkLog 
@@ -83,8 +83,6 @@ export PATH=$PATH:$SPARK_HOME/sbin
 source /etc/profile
 ```
 
-
-
 ### 1.4 Zip and Copy Spark to all other containers
 
 on the` master node`
@@ -107,4 +105,14 @@ sudo chown -R hduser:hadoop /opt/spark-2.4.0-bin-hadoop2.7
 
 ### 1.5 Run Spark
 
-....
+use syk account
+
+```shell
+su syk
+source /etc/profile
+# Run program using YARN Client mode
+spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode client /opt/spark-2.4.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.4.0.jar 3
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%2012.05.55%20AM.png)
+

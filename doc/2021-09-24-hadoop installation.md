@@ -462,6 +462,8 @@ sudo chown -R hduser:hadoop /var/hadoop
 
 ## 5 Start Hadoop.
 
+### 5.1 start Hadoop
+
 on master node:
 
 ```shell
@@ -478,4 +480,173 @@ jps
 # check HDFS
 hdfs dfsadmin -report
 ```
+
+### 5.2  SSH Tunneling
+
+login physical machine (master)
+
+```shell
+ssh -Nf -L physicalMachineIP:XXXYY:containerIP:50070 hduser@containerIP
+
+# e.g.
+ssh -Nf -L 10.42.0.15:10005:10.244.103.23:50070 hduser@10.244.103.23
+```
+
+
+
+SSH Tunneling at **COC-server (groupXX@202.45.128.135)**
+
+```shell
+ssh -Nf -L 202.45.128.135:XXXYY: physicalMachineIP : XXXYY student@ physicalMachineIP
+
+#e.g.
+ssh -Nf -L 202.45.128.135:10005:10.42.0.15:10005 student@10.42.0.15
+```
+
+
+
+... (many steps omitted)
+
+After setting up ssh tunnelling, we can access `202.45.128.135:10005` to get the web UI of Hadoop
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%208.11.17%20PM.png)
+
+
+
+## 6 Example Hadoop Program
+
+### 6.1 Wordcount program
+
+on the main node, login hduser
+
+#### 6.1.1 Preparation 
+
+```shell
+cd ~
+mkdir dft
+# download file
+scp student@10.42.0.1:~/comp7305/dft/large_input/word_input.txt dft/
+
+# Create a directory in HDFS
+hdfs dfs -mkdir /dft-group
+
+# Upload this file to Hadoop
+hdfs dfs -copyFromLocal /home/hduser/dft/word_input.txt /dft-group
+
+# Check the file “word_input.txt” on HDFS
+hdfs dfs -ls /dft-group
+```
+
+####  6.1.2 Test the Wordcount
+
+```shell
+# The word count program is provided as a jar file in Hadoop, which can be executed in HDFS
+yarn jar /opt/hadoop-2.7.5/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.5.jar wordcount /dft-group /dft-group-output-1
+
+# The output is placed in /dft-output in HDFS, we can retrieve it by “copyToLocal”:
+hdfs dfs -copyToLocal /dft-group-output-1 ~/
+```
+
+
+
+#### 6.1.3 Create a new account
+
+```shell
+sudo adduser --ingroup hadoop syk
+
+# Create home directory on HDFS for syk
+hdfs dfs -mkdir /user
+hdfs dfs -mkdir /user/syk
+# Set user permission
+hdfs dfs -mkdir /tmp
+hdfs dfs -chmod -R 777 /tmp
+hdfs dfs -chown -R syk:hadoop /user/syk
+
+# run an example using account syk
+su syk
+source /etc/profile
+cd ~
+mkdir dft
+# download file
+scp student@10.42.0.1:~/comp7305/dft/large_input/word_input.txt dft/
+
+# Create a directory in HDFS
+hdfs dfs -mkdir /user/syk/dft-group
+
+# Upload this file to Hadoop
+hdfs dfs -copyFromLocal /home/syk/dft/word_input.txt /user/syk/dft-group
+
+# The word count program is provided as a jar file in Hadoop, which can be executed in HDFS
+yarn jar /opt/hadoop-2.7.5/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.5.jar wordcount /user/syk/dft-group /user/syk/dft-group-output-1
+```
+
+
+
+
+
+* Use Hadoop Web UI “Browse Directory” to show the “owner” of the uploaded word_input.txt file
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%208.58.29%20PM.png)
+
+
+
+* Use Hadoop Web UI to show the block distribution of your HDFS (all 11 DataNodes should be active)
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.14.03%20PM.png)
+
+* Report the execution time of the WordCount (also show the number of map/reduce tasks completed)
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.00.14%20PM.png)
+
+
+
+* "Successful MAP attempts" page to show the completed map tasks and their execution location
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.19.49%20PM.png)
+
+
+
+
+
+
+
+
+
+## 7 TeraSort
+
+In syk account:
+
+
+
+```shell
+cd /opt/hadoop-2.7.5/share/hadoop/mapreduce
+# Run TeraGen to generate rows of random data to be sorted.
+yarn jar hadoop-mapreduce-examples-2.7.5.jar teragen 100000000 /user/syk/terainput
+
+# Run TeraSort to sort the data
+yarn jar hadoop-mapreduce-examples-2.7.5.jar terasort /user/syk/terainput /user/syk/teraoutput-1
+
+# Run TeraValidate to validate the sorted Teragen
+yarn jar hadoop-mapreduce-examples-2.7.5.jar teravalidate /user/syk/teraoutput-1 /user/syk/teravalidate
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.08.58%20PM.png)
+
+
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.10.21%20PM.png" style="zoom:33%;" />
+
+* Get the Sorting time
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.24.18%20PM.png)
+
+* Result Validation
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-29%20at%209.23.57%20PM.png)
+
+
+
+(Run TeraSort with your own configuration..............to be continue)
+
+
 
