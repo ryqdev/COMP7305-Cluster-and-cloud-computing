@@ -45,13 +45,14 @@ sudo vim /opt/spark-2.4.0-bin-hadoop2.7/conf/spark-defaults.conf
 
 Add
 
-```
-spark.master	spark://student5-master:7077 
-spark.serializer  org.apache.spark.serializer.KryoSerializer
+```shell
+spark.master spark://student5-master:7077 
+spark.serializer org.apache.spark.serializer.KryoSerializer
 spark.executor.instances 11 
 spark.eventLog.enabled true
 spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog 
-spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog spark.eventLog.logBlockUpdates.enabled=true
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog 
+spark.eventLog.logBlockUpdates.enabled=true
 ```
 
 
@@ -107,6 +108,8 @@ sudo chown -R hduser:hadoop /opt/spark-2.4.0-bin-hadoop2.7
 
 use syk account
 
+#### 1.5.1 Run SparkPi using ”spark-submit”
+
 ```shell
 su syk
 source /etc/profile
@@ -115,4 +118,223 @@ spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mo
 ```
 
 ![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%2012.05.55%20AM.png)
+
+```shell
+# spart exaple 
+spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster /opt/spark-2.4.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.4.0.jar 3
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%203.41.38%20PM.png)
+
+
+
+#### 1.5.2 Running Spark via spark-shell
+
+```shell
+spark-shell --master yarn
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%203.43.30%20PM.png)
+
+
+
+### 1.6 Save container to docker image
+
+on physical machine
+
+#### 1.6.1 commit
+
+```shell
+docker commit --author "YourName" Container_ID 10.42.0.102:5000/groupXX-YourName:v1
+
+# e.g.
+docker commit --author "Yukun Shang" 917cb0739437 10.42.0.102:5000/group04-syk:v1
+```
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%203.55.05%20PM.png" style="zoom:50%;" />
+
+#### 1.6.2 push
+
+```shell
+docker push 10.42.0.102:5000/groupXX-YourName:v1
+
+# e.g.
+docker push 10.42.0.102:5000/group04-syk:v1
+```
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%203.55.26%20PM.png" style="zoom: 50%;" />
+
+`docker push` -> Push an image or a repository to a **Docker Hub** or **self-hosted registry**.
+
+In the class, we maintain a private docker registry. The address is 10.42.0.102:5000.
+
+## 2. Spark Web Interfaces
+
+### 2.1 start history server
+
+on master node, use hduser account
+
+```shell
+start-history-server.sh
+```
+
+### 2.2 set up SSH tunneling on studentXX and COC-Server
+
+On the physical machine
+
+```shell
+ssh -Nf -L 10.42.0.15:10505:10.244.103.23:18080 hduser@10.244.103.23
+```
+
+On the COC-Server (the group machine)
+
+```shell
+ssh -Nf -L 202.45.128.135:10505:10.42.0.15:10505 student@10.42.0.15
+```
+
+Then access `202.45.128.135:10505` to the Spark UI
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%204.36.22%20PM.png" style="zoom:50%;" />
+
+
+
+## 3. Useful Spark operations and examples
+
+### 3.1 WordCount Example
+
+#### 3.1.1 preparation
+
+on the master node, use syk account
+
+```shell
+# Download data file “books.tar.gz” from COC-Server
+scp student@10.42.0.1:~/comp7305/books.tar.gz ./
+tar zxvf books.tar.gz
+# Finally, copy the whole folder to HDFS
+hdfs dfs -copyFromLocal books /user/syk/books
+
+# list the files 
+hdfs dfs -ls /user/syk/books
+
+# Show the block location datanodes
+hdfs fsck /user/syk/books -files -blocks -locations
+```
+
+#### 3.1.2 Run WordCount with Spark Shell
+
+```shell
+spark-shell --master yarn
+# Read all files in /books
+var textfile = sc.textFile("hdfs:///user/syk/books");
+# Transformation: filter lines that are non-empty
+var lines = textfile.filter(line => line.length>0);
+# Action: count number of non-empty lines
+var count = lines.count();
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%204.49.32%20PM.png)
+
+### 3.2 Spark: log levels
+
+```shell
+sc.setLogLevel("INFO")
+```
+
+
+
+## 4. Building Spark applications
+
+#### 4.1 Install maven
+
+use hduser account
+
+```shell
+sudo apt-get update
+sudo apt-get install maven
+```
+
+#### 4.2 Check Scala version used in Spark
+
+```shell
+spark-shell --master=yarn
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-09-30%20at%205.06.21%20PM.png)
+
+#### 4.3 Folder structure
+
+use syk account
+
+```shell
+scp student@10.42.0.1:~/comp7305/spark-example.tar.gz ./
+
+tar zxvf spark-example.tar.gz
+```
+
+
+
+#### 4.4 SimpleApp.scala
+
+```shell
+scp -r student@10.42.0.1:~/comp7305/sim/ ./
+cd sim
+cat src/main/scala/SimpleApp.scala
+```
+
+Build program
+
+```shell
+cd sim 
+mvn package
+```
+
+Since it will take about 20 minutes, this part skipped.
+
+
+
+#### 4.5 PySpark
+
+use hduser
+
+#### 4.5.1 preparation
+
+Install the following on 12 containers
+
+```shell
+sudo apt-get update
+sudo apt-get install python
+sudo apt install python-pip
+
+sudo pip install numpy
+sudo pip install pandas
+sudo pip install pandas_datareader
+```
+
+#### 4.5.2 launch pyspark
+
+On master node, use hduser
+
+* use Python shell
+
+```shell
+pyspark --master yarn
+```
+
+* Spark-submit
+
+```shell
+spark-submit --master yarn /opt/spark-2.4.0-binhadoop2.7/examples/src/main/python/pi.py
+```
+
+
+
+## 5. Stock Recommendation Project Demo on Spark
+
+skipped
+
+
+
+## 6. Spark TeraSort
+
+Ta has given his configurations, we need to find the better parameters to beat him.
 
