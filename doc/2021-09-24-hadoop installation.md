@@ -616,8 +616,6 @@ yarn jar /opt/hadoop-2.7.5/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.
 
 In syk account:
 
-
-
 ```shell
 cd /opt/hadoop-2.7.5/share/hadoop/mapreduce
 # Run TeraGen to generate rows of random data to be sorted.
@@ -649,4 +647,17 @@ yarn jar hadoop-mapreduce-examples-2.7.5.jar teravalidate /user/syk/teraoutput-1
 (Run TeraSort with your own configuration..............to be continue)
 
 
+
+## 8 hfs dfs
+
+```shell
+# list
+hdfs dfs -ls
+
+# list certain dirctory
+hdfs dfs -ls [dir]
+
+# rm files
+hdfs dfs -rm -r 
+```
 
