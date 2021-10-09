@@ -621,3 +621,773 @@ dfs.replication 2
 
 
 
+
+
+
+
+
+
+* spark.executor.instances 22
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 2G
+dfs.blocksize 64m
+dfs.replication 2
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%207.19.11%20PM.png)
+
+
+
+
+
+
+
+* spark.executor.instances 22, spark.executor.memory 3G
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 3G
+dfs.blocksize 64m
+dfs.replication 2
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%207.23.13%20PM.png)
+
+
+
+
+
+
+
+* spark.executor.cores 4
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 3G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%207.31.54%20PM.png)
+
+
+
+
+
+
+
+* spark.executor.memory 4G
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 4G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+```
+
+
+
+
+
+* Without repartition:
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 4G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+```
+
+
+
+
+
+* 3G
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 3G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%207.43.58%20PM.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* HDFS blocksize 128MB
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 3G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+HDFS blocksize 128MB
+```
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%207.56.00%20PM.png" style="zoom:50%;" />
+
+
+
+
+
+
+
+* spark.driver.memory 2g
+
+```shell
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 3G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+HDFS blocksize 128MB
+spark.driver.memory 2g
+```
+
+<img src="https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%208.06.24%20PM.png" style="zoom:33%;" />
+
+
+
+
+
+
+
+* spark.executor.memory 4G
+
+```
+spark.master spark://student5-master:7077
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 22
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog
+spark.eventLog.logBlockUpdates.enabled=true
+spark.executor.memory 4G
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.cores 4
+HDFS blocksize 128MB
+spark.driver.memory 2g
+```
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-07%20at%208.06.04%20PM.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* TA's configuration
+
+```
+spark.master spark://student5-master:7077 
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 11 
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog 
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog 
+spark.eventLog.logBlockUpdates.enabled=true
+
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.memory 2GB
+spark.executor.cores 1
+spark.executor.instances 11
+spark.driver.memory 1g
+spark.driver.cores 1
+HDFS blocksize 64
+spark.locality.wait 3s
+spark.speculation false
+spark.default.parallelism 200
+```
+
+(.repartition (11) )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Execution time
+
+Use "jobs tab"
+
+* Default configuration
+
+```
+spark.master spark://student5-master:7077 
+spark.serializer org.apache.spark.serializer.KryoSerializer
+spark.executor.instances 11 
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://student5-master:9000/tmp/sparkLog 
+spark.history.fs.logDirectory hdfs://student5-master:9000/tmp/sparkLog 
+spark.eventLog.logBlockUpdates.enabled=true
+
+dfs.blocksize 64m
+dfs.replication 2
+spark.executor.memory 2GB
+spark.executor.cores 1
+spark.executor.instances 11
+spark.driver.memory 1g
+spark.driver.cores 1
+HDFS blocksize 64
+spark.locality.wait 3s
+spark.speculation false
+spark.default.parallelism 200
+```
+
+(.repartition (11) )
+
+![](https://raw.githubusercontent.com/Yukun4119/BlogImg/main/img/Screenshot%202021-10-08%20at%203.22.42%20PM.png)
+
+
+
+* spark-shell --master yarn --executor-memory 4G
+
+```
+spark-shell --master yarn --executor-memory 4G
+```
+
+0178
+
+
+
+* spark-shell --master yarn --executor-cores 4
+
+```
+spark-shell --master yarn --executor-cores 4
+```
+
+0179
+
+52s: more executors cores
+
+Todo: RDD
+
+
+
+* spark-shell --master yarn --executor-cores 4 --executor-memory 4G
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 4G
+```
+
+0180
+
+not good. too many memory
+
+RDD: full
+
+
+
+* spark-shell --master yarn --executor-cores 4 --executor-memory 3G
+
+  ```
+  spark-shell --master yarn --executor-cores 4 --executor-memory 3G
+  ```
+
+  0181
+
+  RDD:nealy 100%
+
+  just so so
+
+
+
+
+
+* spark.executor.instances = 22
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --num-executors 22
+```
+
+FALLED!
+
+0182
+
+
+
+
+
+* Repartition to 4
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G
+```
+
+(Repartition to 4)
+
+0184
+
+50s
+
+
+
+
+
+* spark.executor.instances = 22
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --num-executors 22
+```
+
+(Repartition to 4)
+
+FALLED!  : maybe out of memory
+
+0185
+
+
+
+* Repartition to 2
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --num-executors 22
+```
+
+(Repartition to 2)
+
+0186
+
+61s: wierd!
+
+
+
+* without --num-executors 22
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G
+```
+
+(Repartition to 2)
+
+0187
+
+
+
+* spark.executor.instances = 22, Memory = 2G
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --num-executors 22
+```
+
+(Repartition to 2)
+
+0188
+
+
+
+* without without --num-executors 22
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G
+```
+
+(Repartition to 2)
+
+0189
+
+
+
+
+
+* Repartition 6
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G
+```
+
+(Repartition to 6)
+
+0190
+
+
+
+* spark.default.parallelism 66
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66
+```
+
+(Repartition to 6)
+
+0191
+
+44s . Awesome!
+
+
+
+* --num-executors 16
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --num-executors 16
+```
+
+(Repartition to 6)
+
+0192
+
+
+
+* --executor-memory 3G
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --conf spark.default.parallelism=66 --num-executors 16
+```
+
+(Repartition to 6)
+
+0193
+
+
+
+
+
+* Repartition 4
+
+  ```
+  spark-shell --master yarn --executor-cores 4 --executor-memory 3G --conf spark.default.parallelism=66 --num-executors 16
+  ```
+
+  (Repartition to 4)
+
+0194:  error!
+
+```
+2021-10-08 15:28:15 WARN  BlockManagerMasterEndpoint:66 - No more replicas available for rdd_5_0 !
+2021-10-08 15:28:15 WARN  YarnSchedulerBackend$YarnSchedulerEndpoint:66 - Requesting driver to remove executor 14 for reason Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+
+2021-10-08 15:28:15 ERROR YarnScheduler:70 - Lost executor 14 on student36-x2: Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+
+2021-10-08 15:28:15 WARN  TaskSetManager:66 - Lost task 0.0 in stage 3.0 (TID 8, student36-x2, executor 14): ExecutorLostFailure (executor 14 exited caused by one of the running tasks) Reason: Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+
+2021-10-08 15:28:15 WARN  TaskSetManager:66 - Lost task 3.0 in stage 3.0 (TID 9, student36-x2, executor 14): ExecutorLostFailure (executor 14 exited caused by one of the running tasks) Reason: Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+
+2021-10-08 15:28:15 WARN  TaskSetManager:66 - Lost task 3.0 in stage 5.0 (TID 13, student36-x2, executor 14): ExecutorLostFailure (executor 14 exited caused by one of the running tasks) Reason: Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+
+2021-10-08 15:28:15 WARN  TaskSetManager:66 - Lost task 0.0 in stage 5.0 (TID 10, student36-x2, executor 14): ExecutorLostFailure (executor 14 exited caused by one of the running tasks) Reason: Container marked as failed: container_1632499850638_0194_01_000015 on host: student36-x2. Exit status: 137. Diagnostics: Container killed on request. Exit code is 137
+Container exited with a non-zero exit code 137
+Killed by external signal
+```
+
+
+
+
+
+
+
+* Repartition 7
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --conf spark.default.parallelism=66 --num-executors 16
+```
+
+(Repartition to 4)
+
+0195
+
+some errors!
+
+```
+2021-10-08 15:31:00 WARN  TaskSetManager:66 - Lost task 4.1 in stage 5.0 (TID 25, student5-x1, executor 11): FetchFailed(null, shuffleId=0, mapId=-1, reduceId=4, message=
+org.apache.spark.shuffle.MetadataFetchFailedException: Missing an output location for shuffle 0
+	at org.apache.spark.MapOutputTracker$$anonfun$convertMapStatuses$2.apply(MapOutputTracker.scala:882)
+	at org.apache.spark.MapOutputTracker$$anonfun$convertMapStatuses$2.apply(MapOutputTracker.scala:878)
+	at scala.collection.Iterator$class.foreach(Iterator.scala:891)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1334)
+	at org.apache.spark.MapOutputTracker$.convertMapStatuses(MapOutputTracker.scala:878)
+	at org.apache.spark.MapOutputTrackerWorker.getMapSizesByExecutorId(MapOutputTracker.scala:691)
+	at org.apache.spark.shuffle.BlockStoreShuffleReader.read(BlockStoreShuffleReader.scala:49)
+	at org.apache.spark.rdd.ShuffledRDD.compute(ShuffledRDD.scala:105)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:288)
+	at org.apache.spark.rdd.CoalescedRDD$$anonfun$compute$1.apply(CoalescedRDD.scala:100)
+	at org.apache.spark.rdd.CoalescedRDD$$anonfun$compute$1.apply(CoalescedRDD.scala:99)
+	at scala.collection.Iterator$$anon$12.nextCur(Iterator.scala:435)
+	at scala.collection.Iterator$$anon$12.hasNext(Iterator.scala:441)
+	at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:409)
+	at org.apache.spark.storage.memory.MemoryStore.putIterator(MemoryStore.scala:220)
+	at org.apache.spark.storage.memory.MemoryStore.putIteratorAsValues(MemoryStore.scala:298)
+	at org.apache.spark.storage.BlockManager$$anonfun$doPutIterator$1.apply(BlockManager.scala:1165)
+	at org.apache.spark.storage.BlockManager$$anonfun$doPutIterator$1.apply(BlockManager.scala:1156)
+	at org.apache.spark.storage.BlockManager.doPut(BlockManager.scala:1091)
+	at org.apache.spark.storage.BlockManager.doPutIterator(BlockManager.scala:1156)
+	at org.apache.spark.storage.BlockManager.getOrElseUpdate(BlockManager.scala:882)
+	at org.apache.spark.rdd.RDD.getOrCompute(RDD.scala:335)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:286)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:288)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:288)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:288)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD$$anonfun$7.apply(RDD.scala:337)
+	at org.apache.spark.rdd.RDD$$anonfun$7.apply(RDD.scala:335)
+	at org.apache.spark.storage.BlockManager$$anonfun$doPutIterator$1.apply(BlockManager.scala:1165)
+	at org.apache.spark.storage.BlockManager$$anonfun$doPutIterator$1.apply(BlockManager.scala:1156)
+	at org.apache.spark.storage.BlockManager.doPut(BlockManager.scala:1091)
+	at org.apache.spark.storage.BlockManager.doPutIterator(BlockManager.scala:1156)
+	at org.apache.spark.storage.BlockManager.getOrElseUpdate(BlockManager.scala:882)
+	at org.apache.spark.rdd.RDD.getOrCompute(RDD.scala:335)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:286)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:324)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:288)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:99)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:55)
+	at org.apache.spark.scheduler.Task.run(Task.scala:121)
+	at org.apache.spark.executor.Executor$TaskRunner$$anonfun$10.apply(Executor.scala:402)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1360)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:408)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+```
+
+
+
+* Repartition = 2
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 3G --conf spark.default.parallelism=66 --num-executors 16
+```
+
+(Repartition to 2)
+
+0196
+
+Error!
+
+
+
+* Repartition = 2
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66
+```
+
+(Repartition to 2)
+
+0197
+
+
+
+* Repartition = 6 (same with 0191)
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66
+```
+
+(Repartition to 6)
+
+0198
+
+
+
+* --driver-cores 4
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4
+```
+
+(Repartition to 6)
+
+0199
+
+43s!
+
+
+
+* --driver-memory 2g
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4 --driver-memory 2g
+```
+
+(Repartition to 6)
+
+0200
+
+
+
+* Repartition = 8
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4
+```
+
+(Repartition to 8)
+
+0201
+
+seems  good
+
+
+
+* Repartition = 10
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4
+```
+
+(Repartition to 10)
+
+0202
+
+
+
+* Repartition to 6 (same with 0199)
+
+```
+spark-shell --master yarn --executor-cores 4 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4
+```
+
+(Repartition to 6)
+
+0203
+
+
+
+* ##### spark.locality.wait
+
+```shell
+spark-shell --master yarn \
+--executor-cores 4 \
+--executor-memory 2G \
+--conf spark.default.parallelism=66 \
+--driver-cores 4 \
+--conf spark.locality.wait=10s
+```
+
+(Repartition to 6)
+
+0218
+
+
+
+* Try it  --executor-cores 2
+
+```
+spark-shell --master yarn --executor-cores 2 --executor-memory 2G --conf spark.default.parallelism=66 --driver-cores 4
+```
+
